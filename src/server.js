@@ -1,7 +1,8 @@
 import express, { json } from "express";
 import { getConnection } from "./database.js";
-import { User } from "./models/USer.js";
-import { UserController } from "./controllers/UserController.js";
+import router from "./router.js";
+// import { User } from "./models/USer.js";
+// import { UserController } from "./controllers/UserController.js";
 // import { get } from "express/lib/response.js";
 const app = express()
 
@@ -10,27 +11,8 @@ const PORT = 4000;
 //middleware
 app.use(json());
 
-//ruta base
-app.get('/', (req, res) => {
-  res.send("Hello World");
-});
-
-//ruta para obtener todos  usuarios
-app.get('/api/clientes', UserController.getAll);
-
-//ruta obtener usuarios por id
-app.get('/api/clientes/:id', UserController.getById);
-
-//registrar cliente
-app.post('/api/clientes', UserController.create);
-
-
-//actualizar ficha cliente por ID. se combinan ambas formas
-app.patch('/api/clientes/:id', UserController.update);
-
-
-//borrar usuario por id
-app.delete('/api/clientes/:id', UserController.delete);
+//rutas
+app.use(router);
 
 //rutas no encontradas
 app.use((req,res) =>{

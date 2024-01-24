@@ -1,26 +1,29 @@
-import res from "express/lib/response.js";
+// import express from "express/lib/response.js";
 import { User } from "../models/USer.js";
 
 export class UserController{
 
+    //OBTENER TODOS LOS USUARIOS
     static async getAll(req, res){
-    //
+    
         try {
             const clientes = await User.getAll();
             res.status(200).json(clientes);
         } catch (error) {
             res.status(500).json({
-                message:"errrrror getting users", error
+                message:"errrrror getting clientes", error
             });
             
         }
     }
+
+    //OBTENER CLIENTE POR ID
     static async getById(req, res){
-        //
+        
                 try {
                     const id = req.params.id;
-
                     const clientes = await User.getById(id);
+                    
                     res.status(200).json(clientes);
                 } catch (error) {
                     res.status(500).json({
@@ -28,8 +31,9 @@ export class UserController{
                     });
                     
                 }
-            }
+    }
     
+    //CREATE
     static async create(req, res){
 
         try {
@@ -47,10 +51,10 @@ export class UserController{
             
         }
     }
-        //
-    
+        
+    //UPDATE
     static async update(req, res){
-        //
+        
         try {
             const id = req.params.id;
             const data = req.body;
@@ -68,8 +72,10 @@ export class UserController{
         }
     }
 
+
+    //DELETE
     static async delete(req, res){
-        //
+    
         try {
             const id = req.params.id;
 
