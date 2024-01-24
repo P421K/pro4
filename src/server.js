@@ -19,59 +19,18 @@ app.get('/', (req, res) => {
 app.get('/api/clientes', UserController.getAll);
 
 //ruta obtener usuarios por id
-app.get('/api/clientes/:id', async (req,res) => {
-    const id = req.params.id;
-
-    const clientes = await User.getById(id);
-    res.status(200).json(clientes);  
-});
+app.get('/api/clientes/:id', UserController.getById);
 
 //registrar cliente
-app.post("/api/clientes", async (req, res) => {
-    const data = req.body;
-    const result = await User.create(data);
-
-    res.status(201).json({
-        message: "user successfully created... =)",
-        id: result,
-    });
-    console.log(`se ha creado un usuario`)
-
-});
+app.post('/api/clientes', UserController.create);
 
 
 //actualizar ficha cliente por ID. se combinan ambas formas
-app.patch('/api/clientes/:id', async (req, res) => {
-
-    const result = await User.update(data);
-    const id = req.params.id;
-
-    // console.log(body);
-
-    res.status(202).json({
-        message: "user successfully updated... =)",
-        result: result.affectedRows > 0,
-    });
-    console.log(`se ha actualizado un usuario`)
-});
+app.patch('/api/clientes/:id', UserController.update);
 
 
 //borrar usuario por id
-app.delete('/api/clientes/:id', async (req, res) => {
-    const connection = await getConnection();
-
-    const id = req.params.id;
-
-    const [result] = await connection.execute(
-        "DELETE FROM clientes WHERE id=?", [id,]
-    );
-    res.status(200).json({
-        message: "user successfully deleted... =)",
-        result: result.affectedRows > 0,
-    });
-    console.log(`se ha borrado un usuario`)
-
-});
+app.delete('/api/clientes/:id', UserController.delete);
 
 //rutas no encontradas
 app.use((req,res) =>{
